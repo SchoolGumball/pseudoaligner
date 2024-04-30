@@ -43,13 +43,15 @@ align <- function(index, reads_index) {
                            aligned_positions = list())
   unaligned <- list()
   
-  for (h in names(r_index)){
+  for (n in names(r_index)){
+    #we get the hash
+    h <- r_index[[n]][1]
     #we check if the index matches any entries
     if (!is.null(i[[h]])){
       #we extract the info we want
       #the order is dependant on the readsIndex data type in case this breaks, probably why
-      id <- r_index[[h]][1]
-      frag <- r_index[[h]][2]
+      id <- n
+      frag <- r_index[[n]][2]
       pos <- i[[h]]
       
       #then we add to df
@@ -59,7 +61,7 @@ align <- function(index, reads_index) {
                                                    aligned_positions = unlist(pos)))
       
     } else{ #if not we throw it into the unaligned list
-      unaligned[[r_index[[h]][1]]] <- r_index[[h]][2]
+      unaligned[[n]] <- r_index[[n]][2]
     }
     
   }
