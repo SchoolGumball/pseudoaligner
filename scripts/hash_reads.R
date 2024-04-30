@@ -39,7 +39,7 @@ create_reads_index <- function(reads_data, k = 10){
   
   # Iterate through the reads
   for (i in names(r)){
-    #we extract the id
+    #we extract the fragment
     fragment <- r[[i]]
     
     kmer <- substr(fragment, start = 1, stop = k)
@@ -48,13 +48,13 @@ create_reads_index <- function(reads_data, k = 10){
     hash_value = digest(kmer)
     
     # Check if the k-mer already exists in the hash table
-    if (is.null(index[[hash_value]])) {
+    if (is.null(index[[i]])) {
       # If not, create a new list to store positions
-      index[[hash_value]] <- list()
+      index[[i]] <- list()
     }
     
     # Add fragment id and sequence under the hash
-    index[[hash_value]] <- c(i, fragment)
+    index[[i]] <- c(hash_value, fragment)
   }
   
   read_index = readsIndex$new(accession_number, n_reads, index)
